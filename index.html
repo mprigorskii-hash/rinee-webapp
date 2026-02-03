@@ -317,6 +317,8 @@
         } : null
       };
 
+     console.log("SENDING:", payload);
+      alert("Отправляю заказ в бот ✅");
       tg.sendData(JSON.stringify(payload));
       // Можно закрывать, но пока оставим открытым (приятнее)
       // tg.close();
