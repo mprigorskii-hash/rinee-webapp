@@ -7,191 +7,65 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root{
-      --bg:#ffffff;
-      --text:#111111;
-      --muted:#6b7280;
-      --line:#e5e7eb;
-      --card:#f6f7f9;
-      --accent:#111111;
-      --radius:18px;
+      --bg:#fff; --text:#111; --muted:#6b7280; --line:#e5e7eb;
+      --card:#f6f7f9; --accent:#111; --radius:18px;
     }
     *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      font-family:-apple-system, system-ui, Arial;
-      background:var(--bg);
-      color:var(--text);
-    }
-    .wrap{
-      max-width:520px;
-      margin:0 auto;
-      padding:16px;
-    }
-    .top{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-      margin-top:6px;
-    }
-    h1{
-      font-size:22px;
-      margin:0;
-      letter-spacing:-0.2px;
-    }
-    .tagline{
-      font-size:13px;
-      color:var(--muted);
-      margin-top:4px;
-      line-height:1.35;
-    }
-    .pill{
-      border:1px solid var(--line);
-      border-radius:999px;
-      padding:8px 10px;
-      font-size:12px;
-      color:var(--muted);
-      white-space:nowrap;
-      background:#fff;
-    }
+    body{ margin:0; font-family:-apple-system, system-ui, Arial; background:var(--bg); color:var(--text); }
+    .wrap{ max-width:520px; margin:0 auto; padding:16px; }
+    .top{ display:flex; justify-content:space-between; gap:12px; margin-top:6px; }
+    h1{ font-size:22px; margin:0; letter-spacing:-0.2px; }
+    .tagline{ font-size:13px; color:var(--muted); margin-top:4px; line-height:1.35; }
+    .pill{ border:1px solid var(--line); border-radius:999px; padding:8px 10px; font-size:12px; color:var(--muted); background:#fff; white-space:nowrap; }
+    .sectionTitle{ margin:18px 0 10px; font-size:14px; color:var(--muted); letter-spacing:0.2px; text-transform:uppercase; }
 
-    .sectionTitle{
-      margin:18px 0 10px;
-      font-size:14px;
-      color:var(--muted);
-      letter-spacing:0.2px;
-      text-transform:uppercase;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:12px;
-    }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      padding:14px;
-    }
-
-    .row{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      justify-content:space-between;
-    }
-
-    .left{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      min-width:0;
-    }
-
+    .grid{ display:grid; grid-template-columns:1fr; gap:12px; }
+    .card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px; }
+    .row{ display:flex; gap:12px; align-items:center; justify-content:space-between; }
+    .left{ display:flex; gap:12px; align-items:center; min-width:0; }
     .thumb{
-      width:54px;
-      height:54px;
-      border-radius:14px;
-      background:#fff;
-      border:1px solid var(--line);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-size:20px;
-      flex:0 0 auto;
+      width:54px; height:54px; border-radius:14px; background:#fff; border:1px solid var(--line);
+      display:flex; align-items:center; justify-content:center; font-size:20px; flex:0 0 auto;
     }
+    .title{ font-size:15px; font-weight:700; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .desc{ margin-top:3px; font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .price{ font-weight:700; font-size:14px; text-align:right; white-space:nowrap; }
 
-    .title{
-      font-size:15px;
-      font-weight:700;
-      margin:0;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .desc{
-      margin-top:3px;
-      font-size:12px;
-      color:var(--muted);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .price{
-      font-weight:700;
-      font-size:14px;
-      text-align:right;
-      white-space:nowrap;
-    }
-
-    .controls{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      margin-top:10px;
-    }
-    .btn{
-      border:1px solid var(--line);
-      background:#fff;
-      border-radius:14px;
-      padding:10px 12px;
-      font-weight:600;
-      cursor:pointer;
-      user-select:none;
-    }
+    .controls{ display:flex; align-items:center; gap:8px; margin-top:10px; }
+    .btn{ border:1px solid var(--line); background:#fff; border-radius:14px; padding:10px 12px; font-weight:600; cursor:pointer; user-select:none; }
     .btnPrimary{
-      background:var(--accent);
-      color:#fff;
-      border-color:var(--accent);
-      width:100%;
-      padding:14px 14px;
-      border-radius:16px;
-      font-size:14px;
+      background:var(--accent); color:#fff; border-color:var(--accent);
+      width:100%; padding:14px 14px; border-radius:16px; font-size:14px;
     }
-    .qty{
-      min-width:24px;
-      text-align:center;
-      font-weight:700;
-    }
+    .qty{ min-width:24px; text-align:center; font-weight:700; }
+    .note{ margin-top:10px; font-size:12px; color:var(--muted); }
 
+    /* Cart bar */
     .cart{
-      position:sticky;
-      bottom:0;
-      background:rgba(255,255,255,0.9);
-      backdrop-filter: blur(10px);
-      border-top:1px solid var(--line);
-      padding:12px 16px;
-      margin:18px -16px 0;
+      position:sticky; bottom:0; background:rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px); border-top:1px solid var(--line);
+      padding:12px 16px; margin:18px -16px 0;
     }
-    .cartInner{
-      max-width:520px;
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .cartMeta{
-      display:flex;
-      flex-direction:column;
-      gap:2px;
-      min-width:0;
-    }
+    .cartInner{ max-width:520px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .cartMeta{ display:flex; flex-direction:column; gap:2px; min-width:0; }
     .cartMeta b{ font-size:14px; }
     .cartMeta span{ font-size:12px; color:var(--muted); }
-
     .hidden{ display:none; }
 
-    .note{
-      margin-top:10px;
-      font-size:12px;
-      color:var(--muted);
+    /* Checkout */
+    .field{ display:flex; flex-direction:column; gap:6px; margin-top:12px; }
+    label{ font-size:12px; color:var(--muted); }
+    input, textarea, select{
+      width:100%; padding:12px 12px; border-radius:14px; border:1px solid var(--line);
+      background:#fff; font-size:14px; outline:none;
     }
+    textarea{ min-height:84px; resize:vertical; }
+    .two{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .headerRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .linkBtn{ border:1px solid var(--line); background:#fff; border-radius:14px; padding:10px 12px; font-weight:600; cursor:pointer; }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="top">
@@ -199,24 +73,81 @@
         <h1>Rinée</h1>
         <div class="tagline">Цветы со смыслом. Минимализм, забота и ясное «я рядом».</div>
       </div>
-      <div class="pill">Apple-style • MVP</div>
+      <div class="pill">MVP • оформление</div>
     </div>
 
-    <div class="sectionTitle">Букеты</div>
-    <div id="grid" class="grid"></div>
+    <!-- CATALOG -->
+    <div id="catalogView">
+      <div class="sectionTitle">Букеты</div>
+      <div id="grid" class="grid"></div>
 
-    <div class="note">
-      Нажми “Оформить” — заказ уйдёт в бот. Оплату и доставку добавим следующим шагом.
+      <div class="note">
+        Нажми “Перейти к оформлению” — заполним контакты и отправим заказ в бот.
+      </div>
+    </div>
+
+    <!-- CHECKOUT -->
+    <div id="checkoutView" class="hidden">
+      <div class="headerRow">
+        <div class="sectionTitle" style="margin:18px 0 0;">Оформление</div>
+        <button id="back" class="linkBtn">← Назад</button>
+      </div>
+
+      <div class="card" style="margin-top:10px;">
+        <div style="font-weight:700;">Состав заказа</div>
+        <div id="summary" class="note" style="margin-top:8px;"></div>
+        <div style="margin-top:10px; font-weight:700;" id="summaryTotal"></div>
+      </div>
+
+      <div class="field">
+        <label>Телефон (обязательно)</label>
+        <input id="phone" placeholder="+7 999 123-45-67" inputmode="tel" />
+      </div>
+
+      <div class="field">
+        <label>Адрес доставки (обязательно)</label>
+        <input id="address" placeholder="Город, улица, дом, кв." />
+      </div>
+
+      <div class="two">
+        <div class="field">
+          <label>День</label>
+          <select id="day">
+            <option value="today">Сегодня</option>
+            <option value="tomorrow">Завтра</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Время</label>
+          <input id="time" placeholder="Например: 18:00–20:00" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Текст открытки (необязательно)</label>
+        <textarea id="cardText" placeholder="Например: «Я рядом. Береги себя.»"></textarea>
+      </div>
+
+      <div class="field">
+        <label>Комментарий курьеру (необязательно)</label>
+        <textarea id="comment" placeholder="Подъезд, домофон, этаж, кому передать…"></textarea>
+      </div>
+
+      <div class="field">
+        <button id="submit" class="btn btnPrimary">Отправить заказ в бот</button>
+        <div class="note" id="hint"></div>
+      </div>
     </div>
   </div>
 
+  <!-- CART BAR -->
   <div id="cart" class="cart hidden">
     <div class="cartInner">
       <div class="cartMeta">
         <b id="cartTotal">Итого: 0 ₽</b>
         <span id="cartCount">0 позиций</span>
       </div>
-      <button id="checkout" class="btn btnPrimary">Оформить заказ</button>
+      <button id="toCheckout" class="btn btnPrimary">Перейти к оформлению</button>
     </div>
   </div>
 
@@ -226,18 +157,20 @@
     tg.expand();
 
     const products = [
-      { id:"quiet",  emoji:"🤍", name:"Тихая нежность", price:5900, desc:"светлая палитра, спокойная забота" },
-      { id:"focus",  emoji:"🖤", name:"Чёрный акцент",  price:6900, desc:"минимализм, характер, без пафоса" },
-      { id:"warm",   emoji:"🌿", name:"Тёплый зелёный", price:6400, desc:"уют, дом, «беречь»" },
+      { id:"quiet", emoji:"🤍", name:"Тихая нежность", price:5900, desc:"светлая палитра, спокойная забота" },
+      { id:"focus", emoji:"🖤", name:"Чёрный акцент",  price:6900, desc:"минимализм, характер, без пафоса" },
+      { id:"warm",  emoji:"🌿", name:"Тёплый зелёный", price:6400, desc:"уют, дом, «беречь»" },
     ];
 
     const cart = {}; // id -> qty
-
     const fmt = (n) => new Intl.NumberFormat("ru-RU").format(n) + " ₽";
 
+    const elCatalog = document.getElementById("catalogView");
+    const elCheckout = document.getElementById("checkoutView");
+    const elCartBar = document.getElementById("cart");
+
     function totals(){
-      let items = 0;
-      let sum = 0;
+      let items = 0, sum = 0;
       for (const p of products){
         const q = cart[p.id] || 0;
         items += q;
@@ -246,7 +179,19 @@
       return { items, sum };
     }
 
-    function render(){
+    function orderLines(){
+      return products
+        .filter(p => cart[p.id])
+        .map(p => ({
+          id: p.id,
+          name: p.name,
+          qty: cart[p.id],
+          price: p.price,
+          subtotal: p.price * cart[p.id]
+        }));
+    }
+
+    function renderCatalog(){
       const grid = document.getElementById("grid");
       grid.innerHTML = "";
 
@@ -269,7 +214,7 @@
 
           <div class="controls">
             <div class="btn" data-action="minus" data-id="${p.id}">−</div>
-            <div class="qty" id="qty-${p.id}">${q}</div>
+            <div class="qty">${q}</div>
             <div class="btn" data-action="plus" data-id="${p.id}">+</div>
           </div>
         `;
@@ -279,12 +224,39 @@
       const { items, sum } = totals();
       document.getElementById("cartTotal").textContent = "Итого: " + fmt(sum);
       document.getElementById("cartCount").textContent = items ? `${items} шт.` : "0 позиций";
-      document.getElementById("cart").classList.toggle("hidden", items === 0);
+      elCartBar.classList.toggle("hidden", items === 0);
+    }
+
+    function showCheckout(){
+      // заполним сводку
+      const lines = orderLines();
+      const { items, sum } = totals();
+
+      document.getElementById("summary").innerHTML = lines.length
+        ? lines.map(it => `• ${it.name} × ${it.qty} — ${fmt(it.subtotal)}`).join("<br/>")
+        : "Корзина пуста";
+
+      document.getElementById("summaryTotal").textContent = "Итого: " + fmt(sum);
+
+      elCatalog.classList.add("hidden");
+      elCartBar.classList.add("hidden");
+      elCheckout.classList.remove("hidden");
+
+      document.getElementById("hint").textContent = items ? "" : "Добавь букет в корзину и вернись.";
+      tg.expand();
+    }
+
+    function showCatalog(){
+      elCheckout.classList.add("hidden");
+      elCatalog.classList.remove("hidden");
+      renderCatalog();
+      tg.expand();
     }
 
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-action]");
       if (!btn) return;
+
       const id = btn.getAttribute("data-id");
       const action = btn.getAttribute("data-action");
       const current = cart[id] || 0;
@@ -293,15 +265,35 @@
       if (action === "minus") cart[id] = Math.max(0, current - 1);
       if (cart[id] === 0) delete cart[id];
 
-      render();
+      renderCatalog();
     });
 
-    document.getElementById("checkout").addEventListener("click", () => {
+    document.getElementById("toCheckout").addEventListener("click", showCheckout);
+    document.getElementById("back").addEventListener("click", showCatalog);
+
+    document.getElementById("submit").addEventListener("click", () => {
+      const lines = orderLines();
       const { items, sum } = totals();
 
-      const lines = products
-        .filter(p => cart[p.id])
-        .map(p => ({ id:p.id, name:p.name, qty:cart[p.id], price:p.price, subtotal:p.price*cart[p.id] }));
+      const phone = document.getElementById("phone").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const day = document.getElementById("day").value;
+      const time = document.getElementById("time").value.trim();
+      const cardText = document.getElementById("cardText").value.trim();
+      const comment = document.getElementById("comment").value.trim();
+
+      if (!items) {
+        alert("Корзина пуста. Добавь букет.");
+        return;
+      }
+      if (!phone) {
+        alert("Нужен телефон.");
+        return;
+      }
+      if (!address) {
+        alert("Нужен адрес доставки.");
+        return;
+      }
 
       const payload = {
         type: "order",
@@ -309,6 +301,14 @@
         items: lines,
         total: sum,
         count: items,
+        delivery: {
+          phone,
+          address,
+          day,
+          time: time || null,
+          cardText: cardText || null,
+          comment: comment || null,
+        },
         ts: Date.now(),
         user: tg.initDataUnsafe?.user ? {
           id: tg.initDataUnsafe.user.id,
@@ -317,14 +317,13 @@
         } : null
       };
 
-     console.log("SENDING:", payload);
-      alert("Отправляю заказ в бот ✅");
       tg.sendData(JSON.stringify(payload));
-      // Можно закрывать, но пока оставим открытым (приятнее)
+      alert("Заказ отправлен в бот ✅");
+      // Можно закрыть миниапп:
       // tg.close();
     });
 
-    render();
+    renderCatalog();
   </script>
 </body>
 </html>
