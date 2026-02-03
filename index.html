@@ -6,55 +6,323 @@
   <title>Rinée</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
-    body {
-      font-family: -apple-system, system-ui, Arial;
-      padding: 16px;
-      background: #fff;
-      color: #111;
+    :root{
+      --bg:#ffffff;
+      --text:#111111;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --card:#f6f7f9;
+      --accent:#111111;
+      --radius:18px;
     }
-    .muted { color:#6b7280; font-size: 13px; margin-top:4px; }
-    .card {
-      border:1px solid #e5e7eb;
-      border-radius:16px;
-      padding:12px;
-      margin:14px 0;
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:-apple-system, system-ui, Arial;
+      background:var(--bg);
+      color:var(--text);
     }
-    button {
-      width:100%;
+    .wrap{
+      max-width:520px;
+      margin:0 auto;
+      padding:16px;
+    }
+    .top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      margin-top:6px;
+    }
+    h1{
+      font-size:22px;
+      margin:0;
+      letter-spacing:-0.2px;
+    }
+    .tagline{
+      font-size:13px;
+      color:var(--muted);
+      margin-top:4px;
+      line-height:1.35;
+    }
+    .pill{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:8px 10px;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      background:#fff;
+    }
+
+    .sectionTitle{
+      margin:18px 0 10px;
+      font-size:14px;
+      color:var(--muted);
+      letter-spacing:0.2px;
+      text-transform:uppercase;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
       padding:14px;
+    }
+
+    .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+    }
+
+    .left{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      min-width:0;
+    }
+
+    .thumb{
+      width:54px;
+      height:54px;
       border-radius:14px;
-      border:0;
-      background:#111;
-      color:#fff;
+      background:#fff;
+      border:1px solid var(--line);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      flex:0 0 auto;
+    }
+
+    .title{
+      font-size:15px;
+      font-weight:700;
+      margin:0;
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+    .desc{
+      margin-top:3px;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+      overflow:hidden;
+      text-overflow:ellipsis;
+    }
+
+    .price{
+      font-weight:700;
+      font-size:14px;
+      text-align:right;
+      white-space:nowrap;
+    }
+
+    .controls{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-top:10px;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:14px;
+      padding:10px 12px;
       font-weight:600;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btnPrimary{
+      background:var(--accent);
+      color:#fff;
+      border-color:var(--accent);
+      width:100%;
+      padding:14px 14px;
+      border-radius:16px;
+      font-size:14px;
+    }
+    .qty{
+      min-width:24px;
+      text-align:center;
+      font-weight:700;
+    }
+
+    .cart{
+      position:sticky;
+      bottom:0;
+      background:rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      border-top:1px solid var(--line);
+      padding:12px 16px;
+      margin:18px -16px 0;
+    }
+    .cartInner{
+      max-width:520px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .cartMeta{
+      display:flex;
+      flex-direction:column;
+      gap:2px;
+      min-width:0;
+    }
+    .cartMeta b{ font-size:14px; }
+    .cartMeta span{ font-size:12px; color:var(--muted); }
+
+    .hidden{ display:none; }
+
+    .note{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
     }
   </style>
 </head>
 <body>
-  <h2>Rinée</h2>
-  <div class="muted">цветы со смыслом</div>
+  <div class="wrap">
+    <div class="top">
+      <div>
+        <h1>Rinée</h1>
+        <div class="tagline">Цветы со смыслом. Минимализм, забота и ясное «я рядом».</div>
+      </div>
+      <div class="pill">Apple-style • MVP</div>
+    </div>
 
-  <div class="card">
-    <b>Тихая нежность</b><br />
-    <span class="muted">5900 ₽</span>
+    <div class="sectionTitle">Букеты</div>
+    <div id="grid" class="grid"></div>
+
+    <div class="note">
+      Нажми “Оформить” — заказ уйдёт в бот. Оплату и доставку добавим следующим шагом.
+    </div>
   </div>
 
-  <button id="send">Отправить заказ</button>
+  <div id="cart" class="cart hidden">
+    <div class="cartInner">
+      <div class="cartMeta">
+        <b id="cartTotal">Итого: 0 ₽</b>
+        <span id="cartCount">0 позиций</span>
+      </div>
+      <button id="checkout" class="btn btnPrimary">Оформить заказ</button>
+    </div>
+  </div>
 
   <script>
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
 
-    document.getElementById("send").addEventListener("click", () => {
+    const products = [
+      { id:"quiet",  emoji:"🤍", name:"Тихая нежность", price:5900, desc:"светлая палитра, спокойная забота" },
+      { id:"focus",  emoji:"🖤", name:"Чёрный акцент",  price:6900, desc:"минимализм, характер, без пафоса" },
+      { id:"warm",   emoji:"🌿", name:"Тёплый зелёный", price:6400, desc:"уют, дом, «беречь»" },
+    ];
+
+    const cart = {}; // id -> qty
+
+    const fmt = (n) => new Intl.NumberFormat("ru-RU").format(n) + " ₽";
+
+    function totals(){
+      let items = 0;
+      let sum = 0;
+      for (const p of products){
+        const q = cart[p.id] || 0;
+        items += q;
+        sum += q * p.price;
+      }
+      return { items, sum };
+    }
+
+    function render(){
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
+
+      for (const p of products){
+        const q = cart[p.id] || 0;
+
+        const el = document.createElement("div");
+        el.className = "card";
+        el.innerHTML = `
+          <div class="row">
+            <div class="left">
+              <div class="thumb">${p.emoji}</div>
+              <div style="min-width:0">
+                <div class="title">${p.name}</div>
+                <div class="desc">${p.desc}</div>
+              </div>
+            </div>
+            <div class="price">${fmt(p.price)}</div>
+          </div>
+
+          <div class="controls">
+            <div class="btn" data-action="minus" data-id="${p.id}">−</div>
+            <div class="qty" id="qty-${p.id}">${q}</div>
+            <div class="btn" data-action="plus" data-id="${p.id}">+</div>
+          </div>
+        `;
+        grid.appendChild(el);
+      }
+
+      const { items, sum } = totals();
+      document.getElementById("cartTotal").textContent = "Итого: " + fmt(sum);
+      document.getElementById("cartCount").textContent = items ? `${items} шт.` : "0 позиций";
+      document.getElementById("cart").classList.toggle("hidden", items === 0);
+    }
+
+    document.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-action]");
+      if (!btn) return;
+      const id = btn.getAttribute("data-id");
+      const action = btn.getAttribute("data-action");
+      const current = cart[id] || 0;
+
+      if (action === "plus") cart[id] = current + 1;
+      if (action === "minus") cart[id] = Math.max(0, current - 1);
+      if (cart[id] === 0) delete cart[id];
+
+      render();
+    });
+
+    document.getElementById("checkout").addEventListener("click", () => {
+      const { items, sum } = totals();
+
+      const lines = products
+        .filter(p => cart[p.id])
+        .map(p => ({ id:p.id, name:p.name, qty:cart[p.id], price:p.price, subtotal:p.price*cart[p.id] }));
+
       const payload = {
         type: "order",
-        product: "Тихая нежность",
-        price: 5900,
-        ts: Date.now()
+        brand: "Rinée",
+        items: lines,
+        total: sum,
+        count: items,
+        ts: Date.now(),
+        user: tg.initDataUnsafe?.user ? {
+          id: tg.initDataUnsafe.user.id,
+          username: tg.initDataUnsafe.user.username,
+          first_name: tg.initDataUnsafe.user.first_name
+        } : null
       };
+
       tg.sendData(JSON.stringify(payload));
+      // Можно закрывать, но пока оставим открытым (приятнее)
+      // tg.close();
     });
+
+    render();
   </script>
 </body>
 </html>
