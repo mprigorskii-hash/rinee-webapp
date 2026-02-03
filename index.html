@@ -7,96 +7,287 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root{
-      --bg:#fff; --text:#111; --muted:#6b7280; --line:#e5e7eb;
-      --card:#f6f7f9; --accent:#111; --radius:18px;
+      --bg:#ffffff;
+      --text:#0b0b0c;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --soft:#f6f7f9;
+      --accent:#0b0b0c;
+      --radius:22px;
+      --shadow: 0 12px 30px rgba(0,0,0,.06);
     }
     *{ box-sizing:border-box; }
-    body{ margin:0; font-family:-apple-system, system-ui, Arial; background:var(--bg); color:var(--text); }
-    .wrap{ max-width:520px; margin:0 auto; padding:16px; }
-    .top{ display:flex; justify-content:space-between; gap:12px; margin-top:6px; }
-    h1{ font-size:22px; margin:0; letter-spacing:-0.2px; }
-    .tagline{ font-size:13px; color:var(--muted); margin-top:4px; line-height:1.35; }
-    .pill{ border:1px solid var(--line); border-radius:999px; padding:8px 10px; font-size:12px; color:var(--muted); background:#fff; white-space:nowrap; }
-    .sectionTitle{ margin:18px 0 10px; font-size:14px; color:var(--muted); letter-spacing:0.2px; text-transform:uppercase; }
+    body{
+      margin:0;
+      font-family:-apple-system, system-ui, Arial;
+      color:var(--text);
+      background: radial-gradient(1200px 600px at 50% -100px, #f7f7f7 0%, var(--bg) 55%);
+    }
+    .wrap{ max-width:560px; margin:0 auto; padding:16px; }
+    .topbar{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:8px 0 6px;
+    }
+    .brand{
+      display:flex; flex-direction:column; gap:2px;
+    }
+    .brand b{ font-size:18px; letter-spacing:-.2px; }
+    .brand span{ font-size:12px; color:var(--muted); }
+    .pill{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(10px);
+      padding:8px 10px;
+      border-radius:999px;
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+
+    .hero{
+      margin-top:10px;
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background: linear-gradient(180deg, #ffffff 0%, #fbfbfb 100%);
+      box-shadow: var(--shadow);
+      padding:18px;
+    }
+    .hero h1{
+      margin:0;
+      font-size:26px;
+      letter-spacing:-.4px;
+      line-height:1.1;
+    }
+    .hero p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-size:14px;
+      line-height:1.35;
+    }
+    .heroActions{
+      margin-top:14px;
+      display:flex;
+      gap:10px;
+    }
+    .btn{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:16px;
+      padding:12px 14px;
+      font-weight:600;
+      cursor:pointer;
+      user-select:none;
+      transition: transform .06s ease;
+    }
+    .btn:active{ transform: scale(.98); }
+    .btnPrimary{
+      background:var(--accent);
+      color:#fff;
+      border-color:var(--accent);
+      width:100%;
+    }
+    .btnGhost{ color:var(--text); }
+
+    .sectionTitle{
+      margin:18px 0 10px;
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:0.18em;
+      text-transform:uppercase;
+    }
 
     .grid{ display:grid; grid-template-columns:1fr; gap:12px; }
-    .card{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:14px; }
-    .row{ display:flex; gap:12px; align-items:center; justify-content:space-between; }
-    .left{ display:flex; gap:12px; align-items:center; min-width:0; }
-    .thumb{
-      width:54px; height:54px; border-radius:14px; background:#fff; border:1px solid var(--line);
-      display:flex; align-items:center; justify-content:center; font-size:20px; flex:0 0 auto;
-    }
-    .title{ font-size:15px; font-weight:700; margin:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .desc{ margin-top:3px; font-size:12px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .price{ font-weight:700; font-size:14px; text-align:right; white-space:nowrap; }
 
-    .controls{ display:flex; align-items:center; gap:8px; margin-top:10px; }
-    .btn{ border:1px solid var(--line); background:#fff; border-radius:14px; padding:10px 12px; font-weight:600; cursor:pointer; user-select:none; }
-    .btnPrimary{
-      background:var(--accent); color:#fff; border-color:var(--accent);
-      width:100%; padding:14px 14px; border-radius:16px; font-size:14px;
+    .product{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:#fff;
+      overflow:hidden;
+      box-shadow: 0 10px 24px rgba(0,0,0,.05);
     }
-    .qty{ min-width:24px; text-align:center; font-weight:700; }
-    .note{ margin-top:10px; font-size:12px; color:var(--muted); }
+    .img{
+      width:100%;
+      aspect-ratio: 16/11;
+      background:#f2f3f5;
+      position:relative;
+      overflow:hidden;
+    }
+    .img img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.02);
+    }
+    .img .badge{
+      position:absolute;
+      left:12px;
+      top:12px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.35);
+      background: rgba(20,20,20,.55);
+      color:#fff;
+      font-size:12px;
+      backdrop-filter: blur(10px);
+    }
+    .body{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+    .titleRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .name{
+      font-weight:800;
+      font-size:16px;
+      letter-spacing:-.2px;
+      line-height:1.15;
+    }
+    .price{
+      font-weight:800;
+      white-space:nowrap;
+      font-size:15px;
+    }
+    .meaning{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.3;
+    }
+
+    .controls{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding-top:4px;
+    }
+    .qtyBox{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      background:var(--soft);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:8px 10px;
+    }
+    .mini{
+      width:34px;
+      height:34px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:800;
+      cursor:pointer;
+    }
+    .mini:active{ transform: scale(.98); }
+    .qty{
+      min-width:22px;
+      text-align:center;
+      font-weight:800;
+    }
 
     /* Cart bar */
     .cart{
-      position:sticky; bottom:0; background:rgba(255,255,255,0.92);
-      backdrop-filter: blur(10px); border-top:1px solid var(--line);
-      padding:12px 16px; margin:18px -16px 0;
+      position:sticky;
+      bottom:0;
+      margin:18px -16px 0;
+      padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+      border-top:1px solid var(--line);
+      background: rgba(255,255,255,.92);
+      backdrop-filter: blur(12px);
     }
-    .cartInner{ max-width:520px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .cartInner{
+      max-width:560px;
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
     .cartMeta{ display:flex; flex-direction:column; gap:2px; min-width:0; }
     .cartMeta b{ font-size:14px; }
     .cartMeta span{ font-size:12px; color:var(--muted); }
     .hidden{ display:none; }
 
-    /* Checkout */
+    /* Checkout view */
+    .checkout{ margin-top:12px; }
+    .card{
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      background:#fff;
+      box-shadow: var(--shadow);
+      padding:14px;
+    }
+    .headerRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+    .linkBtn{
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:16px;
+      padding:10px 12px;
+      font-weight:700;
+      cursor:pointer;
+    }
     .field{ display:flex; flex-direction:column; gap:6px; margin-top:12px; }
     label{ font-size:12px; color:var(--muted); }
     input, textarea, select{
-      width:100%; padding:12px 12px; border-radius:14px; border:1px solid var(--line);
-      background:#fff; font-size:14px; outline:none;
+      width:100%;
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:14px;
+      outline:none;
     }
     textarea{ min-height:84px; resize:vertical; }
     .two{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    .headerRow{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
-    .linkBtn{ border:1px solid var(--line); background:#fff; border-radius:14px; padding:10px 12px; font-weight:600; cursor:pointer; }
+    .note{ margin-top:10px; font-size:12px; color:var(--muted); line-height:1.35; }
   </style>
 </head>
 
 <body>
   <div class="wrap">
-    <div class="top">
-      <div>
-        <h1>Rinée</h1>
-        <div class="tagline">Цветы со смыслом. Минимализм, забота и ясное «я рядом».</div>
+    <div class="topbar">
+      <div class="brand">
+        <b>Rinée</b>
+        <span>цветы со смыслом</span>
       </div>
-      <div class="pill">MVP • оформление</div>
+      <div class="pill">доставка • MVP</div>
+    </div>
+
+    <!-- HERO -->
+    <div class="hero" id="hero">
+      <h1>Когда хочется<br/>беречь.</h1>
+      <p>Выбираешь букет — и в одном жесте появляется то самое: спокойствие, забота и “я рядом”.</p>
+      <div class="heroActions">
+        <button class="btn btnPrimary" id="goCatalog">Выбрать букет</button>
+        <button class="btn btnGhost" id="goCheckoutGhost">Оформление</button>
+      </div>
     </div>
 
     <!-- CATALOG -->
     <div id="catalogView">
       <div class="sectionTitle">Букеты</div>
       <div id="grid" class="grid"></div>
-
-      <div class="note">
-        Нажми “Перейти к оформлению” — заполним контакты и отправим заказ в бот.
-      </div>
+      <div class="note">Тёплый тон, чистый дизайн. Оплату добавим следующим шагом.</div>
     </div>
 
     <!-- CHECKOUT -->
-    <div id="checkoutView" class="hidden">
+    <div id="checkoutView" class="hidden checkout">
       <div class="headerRow">
-        <div class="sectionTitle" style="margin:18px 0 0;">Оформление</div>
+        <div class="sectionTitle" style="margin:0;">Оформление</div>
         <button id="back" class="linkBtn">← Назад</button>
       </div>
 
       <div class="card" style="margin-top:10px;">
-        <div style="font-weight:700;">Состав заказа</div>
+        <div style="font-weight:800;">Состав заказа</div>
         <div id="summary" class="note" style="margin-top:8px;"></div>
-        <div style="margin-top:10px; font-weight:700;" id="summaryTotal"></div>
+        <div style="margin-top:10px; font-weight:800;" id="summaryTotal"></div>
       </div>
 
       <div class="field">
@@ -152,14 +343,16 @@
   </div>
 
   <script>
+    // :contentReference[oaicite:1]{index=1} Mini App init
     const tg = window.Telegram.WebApp;
     tg.ready();
     tg.expand();
 
+    // Если хочешь: замени описания на свои брендовые формулировки
     const products = [
-      { id:"quiet", emoji:"🤍", name:"Тихая нежность", price:5900, desc:"светлая палитра, спокойная забота" },
-      { id:"focus", emoji:"🖤", name:"Чёрный акцент",  price:6900, desc:"минимализм, характер, без пафоса" },
-      { id:"warm",  emoji:"🌿", name:"Тёплый зелёный", price:6400, desc:"уют, дом, «беречь»" },
+      { id:"quiet", name:"Тихая нежность", price:5900, meaning:"Поддержка без лишних слов.", badge:"мягко", img:"assets/quiet.jpg" },
+      { id:"focus", name:"Чёрный акцент",  price:6900, meaning:"Когда важно держать опору.", badge:"сдержанно", img:"assets/focus.jpg" },
+      { id:"warm",  name:"Тёплый зелёный", price:6400, meaning:"Уют и забота, которую чувствуешь.", badge:"уютно", img:"assets/warm.jpg" },
     ];
 
     const cart = {}; // id -> qty
@@ -199,23 +392,27 @@
         const q = cart[p.id] || 0;
 
         const el = document.createElement("div");
-        el.className = "card";
+        el.className = "product";
         el.innerHTML = `
-          <div class="row">
-            <div class="left">
-              <div class="thumb">${p.emoji}</div>
-              <div style="min-width:0">
-                <div class="title">${p.name}</div>
-                <div class="desc">${p.desc}</div>
-              </div>
-            </div>
-            <div class="price">${fmt(p.price)}</div>
+          <div class="img">
+            <img src="${p.img}" alt="${p.name}" />
+            <div class="badge">${p.badge}</div>
           </div>
+          <div class="body">
+            <div class="titleRow">
+              <div class="name">${p.name}</div>
+              <div class="price">${fmt(p.price)}</div>
+            </div>
+            <div class="meaning">${p.meaning}</div>
 
-          <div class="controls">
-            <div class="btn" data-action="minus" data-id="${p.id}">−</div>
-            <div class="qty">${q}</div>
-            <div class="btn" data-action="plus" data-id="${p.id}">+</div>
+            <div class="controls">
+              <div class="qtyBox">
+                <button class="mini" data-action="minus" data-id="${p.id}">−</button>
+                <div class="qty">${q}</div>
+                <button class="mini" data-action="plus" data-id="${p.id}">+</button>
+              </div>
+              <button class="btn" data-action="quick" data-id="${p.id}">Добавить</button>
+            </div>
           </div>
         `;
         grid.appendChild(el);
@@ -225,10 +422,10 @@
       document.getElementById("cartTotal").textContent = "Итого: " + fmt(sum);
       document.getElementById("cartCount").textContent = items ? `${items} шт.` : "0 позиций";
       elCartBar.classList.toggle("hidden", items === 0);
+      tg.expand();
     }
 
     function showCheckout(){
-      // заполним сводку
       const lines = orderLines();
       const { items, sum } = totals();
 
@@ -239,11 +436,12 @@
       document.getElementById("summaryTotal").textContent = "Итого: " + fmt(sum);
 
       elCatalog.classList.add("hidden");
-      elCartBar.classList.add("hidden");
       elCheckout.classList.remove("hidden");
+      elCartBar.classList.add("hidden");
 
       document.getElementById("hint").textContent = items ? "" : "Добавь букет в корзину и вернись.";
       tg.expand();
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function showCatalog(){
@@ -253,6 +451,12 @@
       tg.expand();
     }
 
+    document.getElementById("goCatalog").addEventListener("click", () => {
+      const y = document.getElementById("catalogView").offsetTop;
+      window.scrollTo({ top: y - 10, behavior: "smooth" });
+    });
+    document.getElementById("goCheckoutGhost").addEventListener("click", showCheckout);
+
     document.addEventListener("click", (e) => {
       const btn = e.target.closest("[data-action]");
       if (!btn) return;
@@ -261,7 +465,7 @@
       const action = btn.getAttribute("data-action");
       const current = cart[id] || 0;
 
-      if (action === "plus") cart[id] = current + 1;
+      if (action === "plus" || action === "quick") cart[id] = current + 1;
       if (action === "minus") cart[id] = Math.max(0, current - 1);
       if (cart[id] === 0) delete cart[id];
 
@@ -282,18 +486,9 @@
       const cardText = document.getElementById("cardText").value.trim();
       const comment = document.getElementById("comment").value.trim();
 
-      if (!items) {
-        alert("Корзина пуста. Добавь букет.");
-        return;
-      }
-      if (!phone) {
-        alert("Нужен телефон.");
-        return;
-      }
-      if (!address) {
-        alert("Нужен адрес доставки.");
-        return;
-      }
+      if (!items) { alert("Корзина пуста. Добавь букет."); return; }
+      if (!phone) { alert("Нужен телефон."); return; }
+      if (!address) { alert("Нужен адрес доставки."); return; }
 
       const payload = {
         type: "order",
@@ -319,8 +514,6 @@
 
       tg.sendData(JSON.stringify(payload));
       alert("Заказ отправлен в бот ✅");
-      // Можно закрыть миниапп:
-      // tg.close();
     });
 
     renderCatalog();
